@@ -9,14 +9,6 @@ from trac.web.auth import LoginModule
 from auth_server_client import oauth2
 
 
-oauth2.init("4d2302d52b5ee74918000009", 
-            "http://localhost:8080/trac_env_test/auth_server_process",
-            "some secret string",
-            "http://example.com:7070/oauth2/authorize",
-            "http://example.com:7070/oauth2/token",            
-            "http://example.com:7070/auth")
-
-
 class NoAnonymousAuthServerPlugin(Component):
   """Redirects user to auth_server when not logged-in.
   """
@@ -37,6 +29,13 @@ class NoAnonymousAuthServerPlugin(Component):
 class AuthServerPlugin(LoginModule):
   """Enables an user to log-in using auth_server.
   """
+
+  def __init__(self):
+    # Init oauth2 client according to config:
+    options = ['client_id', 'process_url', 'client_secret', 'authorize_url',
+               'token_url', 'auth_url']
+    args = [self.config.get('trac_auth_server', key) for key in options]
+    oauth2.init(*args)
 
   # INavigationContributor methods
   # To Add a link to log-in using auth_server
