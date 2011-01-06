@@ -66,7 +66,10 @@ class AuthServerPlugin(LoginModule):
   def _redirects_for_login(self, req):
     """Redirects the user to auth_server for login.
     """
-    state = self._referer(req) or req.abs_href() # Use state to contain next url.
+    state = self._referer(req) # Use state to contain next url.
+    if not state or "/auth_server_" in state: 
+      # we don't want to be redirected on a auth_server_* url.
+      state = req.abs_href()
     url = oauth2.get_login_url(state)
     req.redirect(url)
 
