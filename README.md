@@ -38,6 +38,8 @@ Example:
     authorize_url = http://auth_server.com:7070/oauth2/authorize
     token_url = http://auth_server.com:7070/oauth2/token
     auth_url = http://auth_server.com:7070/auth
+    authority = example.com
+    domain = trac.net
 
 
 ## License

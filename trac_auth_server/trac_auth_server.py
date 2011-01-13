@@ -33,7 +33,7 @@ class AuthServerPlugin(LoginModule):
   def __init__(self):
     # Init oauth2 client according to config:
     options = ['client_id', 'process_url', 'client_secret', 'authorize_url',
-               'token_url', 'auth_url']
+               'token_url', 'auth_url', 'authority', 'domain']
     args = [self.config.get('trac_auth_server', key) for key in options]
     oauth2.init(*args)
 
@@ -97,7 +97,7 @@ class AuthServerPlugin(LoginModule):
 
     # We cannot directly write into req.remote_user, so write in environ
     # and let LoginModule set cookie stuff as needed...
-    req.environ['REMOTE_USER'] = info.get('email')
+    req.environ['REMOTE_USER'] = info.get('userid')
     LoginModule._do_login(self, req)
     req.redirect(next)
 
