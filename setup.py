@@ -17,7 +17,7 @@ setup(
   include_package_data = True,
   package_data={},
   install_requires = [
-    'AuthServerClient==0.0.1'
+    'AuthServerClient>=0.0.2'
   ],
   classifiers=[
     "Development Status :: 3 - Alpha",
